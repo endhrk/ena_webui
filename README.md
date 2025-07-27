@@ -18,6 +18,9 @@ This project provides a small Flask-based web UI that connects to a KoboldCpp AP
 Install the dependencies and start the server:
 
 ```bash
+git clone https://github.com/endhrk/ena_webui.git
+cd ena_webui
+
 pip install -r requirements.txt
 python app.py --host 0.0.0.0 --port 5000 --kobold-url http://localhost:5001/api/v1/generate
 ```
@@ -30,8 +33,12 @@ packages on your system. You can set one up with the built in
 `venv` module:
 
 ```bash
+git clone https://github.com/endhrk/ena_webui.git
+cd ena_webui
+
 python -m venv venv
 source venv/bin/activate
+
 pip install -r requirements.txt
 python app.py --host 0.0.0.0 --port 5000 --kobold-url http://localhost:5001/api/v1/generate
 ```
