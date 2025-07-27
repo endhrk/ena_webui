@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ENA webui</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        async function generateText() {
+            const prompt = document.getElementById('prompt').value;
+            const res = await fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({prompt})
+            });
+            const data = await res.json();
+            document.getElementById('generated').value = data.text;
+            const log = document.getElementById('log');
+            log.value += '\n' + prompt + '\n' + data.text + '\n---\n';
+        }
+
+        async function saveChapter() {
+            const title = document.getElementById('chapter-title').value;
+            const text = document.getElementById('generated').value;
+            const res = await fetch('/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({title, text})
+            });
+            const data = await res.json();
+            alert(data.message);
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div style="flex: 1;">
+        <textarea id="prompt" placeholder="Enter prompt here..."></textarea>
+        <button onclick="generateText()">Generate</button>
+    </div>
+    <div style="flex: 1;">
+        <textarea id="generated" readonly></textarea>
+    </div>
+    <div style="width: 300px; padding: 10px;">
+        <textarea id="log" readonly></textarea>
+        <input type="text" id="chapter-title" placeholder="Chapter title">
+        <button onclick="saveChapter()">Save Chapter</button>
+    </div>
+</div>
+</body>
+</html>
